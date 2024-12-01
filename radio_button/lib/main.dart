@@ -60,7 +60,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             ListTile(
-              title: Text("green"),
+              title: Text("green "),
               leading: Radio(
                 value: 'green',
                 groupValue: colorSelectorPro.selected,
@@ -73,7 +73,8 @@ class HomePage extends StatelessWidget {
               width: 100,
               height: 100,
               color: colorSelectorPro.conColor,
-            )
+            ),
+            
           ],
         ),
       ),

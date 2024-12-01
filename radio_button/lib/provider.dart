@@ -8,8 +8,8 @@ class colorSelector extends ChangeNotifier {
     Colors.green
   ];
 
-  String? selected;
-  Color? conColor;
+  String selected = 'red';
+  Color conColor = Colors.red;
   void changeColor(String value, int index) {
     selected = value;
 
