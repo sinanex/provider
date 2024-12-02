@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutterpro/bottomBar.dart';
-import 'package:flutterpro/image.dart';
-import 'package:flutterpro/provider.dart';
+import 'package:flutterpro/providerColor.dart';
 import 'package:provider/provider.dart';
 
-void main(){
-  runApp(MyApp());
+void main() {
+  runApp(ChangeNotifierProvider(
+      create: (context) => ColorChange(), child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -13,72 +12,30 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => radioBtn(),),
-        ChangeNotifierProvider(create: (context) => checkbox(),),
-        ChangeNotifierProvider(create: (context) => switchButton(),),
-        ChangeNotifierProvider(create: (context) => containerSize(),),
-        ChangeNotifierProvider(create: (context) => bottomAppBar()),
-        ChangeNotifierProvider(create: (context) => imageddProvider()),
-      ],
-      child: Consumer<checkbox>(
-        builder: (context, value, child) =>  MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: value.themechange,
-          home: ImagePage(),
-        ),
+    return ChangeNotifierProvider(
+      create: (context) => ColorChange(),
+      child: MaterialApp(
+        home: HomePage(),
       ),
     );
   }
 }
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-   children: [
-
-    Consumer<checkbox>(
-      builder: (context, check, child) =>  Checkbox(value: check.check, onChanged: (value) {
-       check.change(value!);
-      },),
-    ),
-    Consumer<radioBtn>(
-      builder: (context, radiobtn, child) => 
- Column(
-   children: [
-     RadioListTile(
-      title: Text("data"),
-      value: 'selct 1', groupValue: radiobtn.selected, onChanged: (value) {
-      radiobtn.radioBtnchange(value!);
-     },),
-   RadioListTile(value: 'selct 2', groupValue: radiobtn.selected, onChanged: (value) {
-      radiobtn.radioBtnchange(value!);
-     },),
-     Consumer<switchButton>(
-      builder: (context, switchBtn, child) => 
-Switch(value: switchBtn.on, onChanged: (value) {
-            switchBtn.changeSwitch(value);
-       },),
-     ),
-      Consumer<containerSize>
-      (
-        builder: (context, value, child) => GestureDetector(
-          onTap: () =>
-            value.changeHeigth()
-          ,
-          child: Container(
-            width: value.conwidth,
-            height: 100,
-            color: Colors.black,
-          ),
-        )),
-   ],
- )),
-   ],
-    ),);
+    return Scaffold(
+        body: Center(
+            child: IconButton(
+      icon: Icon(
+        Icons.favorite,size: 50,
+        color: Provider.of<ColorChange>(context).iconColor,
+      ),
+      onPressed: () {
+        Provider.of<ColorChange>(context,listen: false).changeColor();
+      },
+    )));
   }
 }
